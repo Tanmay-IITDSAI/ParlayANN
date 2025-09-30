@@ -28,7 +28,7 @@ The original project report includes experimental evaluation on SIFT1M, Deep1B a
 
 ---
 
-## Repository Structure (suggested)
+## Repository Structure
 
 ```
 / (repo root)
@@ -56,16 +56,69 @@ The original project report includes experimental evaluation on SIFT1M, Deep1B a
 
 ## Build (example)
 
-> Replace `project-name` and commands with your repo's actual build targets.
+If your repository contains **CMakeLists** (preferred)
 
 ```bash
 # from repo root
 mkdir -p build && cd build
-cmake ..
+cmake .. -DCMAKE_BUILD_TYPE=Release
 cmake --build . -- -j$(nproc)
 ```
 
-After building you should get binaries for the index construction and the query server, for example: `parlay_hcnng_build`, `parlay_pynnd_build`, `parlay_query` (names are placeholders — update according to actual targets).
+After a successful build, look in `build/` (or `bin/`) for executables. Common targets for this project might be `parlay_hcnng_build`, `parlay_pynnd_build` or `hcnng_index` depending on how the CMake targets are named in `CMakeLists.txt`.
+
+If your repository contains a top-level **Makefile**
+
+```bash
+# from repo root
+# build with parallel jobs
+make -j$(nproc)
+# or to specify CXX/CFLAGS
+make CXX=g++ CXXFLAGS='-O3 -march=native' -j$(nproc)
+```
+
+Common Makefile targets: `all` (default), `clean`, `install`. If the Makefile defines named targets like `hcnng_index`, run `make hcnng_index`.
+
+### Quick checks
+
+* If you see source/header names like `hcnng_index`, `clusterEdge`, `neighbors` (as in your project bundle), search the root `CMakeLists.txt` or `Makefile` for those names to identify the corresponding targets and output executables.
+* After building, run `ls -l build/` and `file build/*` to inspect which files are executables.
+
+### Example minimal CMakeLists (adapt to your code)
+
+```cmake
+cmake_minimum_required(VERSION 3.10)
+project(ParlayANN LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_BUILD_TYPE Release)
+
+# Add an option for Parlay/Threading libs
+# find_package(Parlay REQUIRED)  # uncomment if you have a Parlay package
+
+file(GLOB SRC_FILES src/*.cpp)
+add_executable(parlay_hcnng_build ${SRC_FILES})
+# target_include_directories(parlay_hcnng_build PRIVATE include/)
+# target_link_libraries(parlay_hcnng_build PRIVATE parlay pthread)
+```
+
+### Example Makefile fragment (adapt to your code)
+
+```makefile
+CXX := g++
+CXXFLAGS := -O3 -std=c++17 -march=native -Iinclude
+SRCS := $(wildcard src/*.cpp)
+OBJS := $(SRCS:.cpp=.o)
+TARGET := parlay_hcnng_build
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ -lpthread
+
+clean:
+	rm -f $(OBJS) $(TARGET)
+```
 
 ---
 
@@ -129,9 +182,10 @@ Add full BibTeX / reference list in `docs/` or cite directly in the paper/report
 
 Contributions, issues and feature requests are welcome. Please open issues for bugs or feature proposals and submit pull requests for fixes.
 
------
+---
 
 ## License
 
-Add your chosen license (e.g., `MIT`, `Apache-2.0`)
+Add your chosen license (e.g., `MIT`, `Apache-2.0`).
 
+*This README was generated from the project proposal.*
