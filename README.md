@@ -130,19 +130,9 @@ Add full BibTeX / reference list in `docs/` or cite directly in the paper/report
 
 Contributions, issues and feature requests are welcome. Please open issues for bugs or feature proposals and submit pull requests for fixes.
 
----
-
-## Authors
-
-* Ahire Sandesh Naval (12140110)
-* Tanmay Kumar Shrivastava (12241870)
-* Aditya Prakash (12240040)
-
----
+-----
 
 ## License
 
-Add your chosen license (e.g., `MIT`, `Apache-2.0`) in a `LICENSE` file.
-
-*This README was generated from the project proposal.*
+Add your chosen license (e.g., `MIT`, `Apache-2.0`)
 
