@@ -187,5 +187,3 @@ Contributions, issues and feature requests are welcome. Please open issues for b
 ## License
 
 Add your chosen license (e.g., `MIT`, `Apache-2.0`).
-
-*This README was generated from the project proposal.*
