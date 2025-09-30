@@ -1,4 +1,3 @@
-# Implementation of Deterministic Parallel Graph-Based ANNS Algorithms from ParlayANN
 # ParlayANN — Deterministic Parallel Graph-Based ANNS (ParlayHCNNG & ParlayPyNNDescent)
 
 > Implementation of deterministic, batch-parallel graph-based Approximate Nearest Neighbor Search (ANNS) inspired by the ParlayANN framework.
